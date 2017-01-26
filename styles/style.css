@@ -1,0 +1,31 @@
+html {
+	font-size: 10px;
+	font-family: 'Droid Serif', serif;
+	background-color: #00539F;
+	
+}
+
+h1 {
+	margin: 0;
+	padding: 20px 0;	
+	font-family: 'Tangerine', cursive;
+	font-size: 45px;
+	text-align: center;
+	color: #00539F;
+	text-shadow: 2px 2px 3px #0053FF;
+}
+
+p, li {	
+	font-size: 16px;
+	line-height: 2;
+	letter-spacing: 1px;
+}
+
+body {
+	width: 900px;
+	margin: 0 auto;
+	background-color: #ffffff;
+	padding: 0 20px 20px 20px;
+	border: 5px solid black;
+}
+
