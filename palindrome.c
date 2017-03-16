@@ -2,16 +2,9 @@
 #include <string.h>
 
 #define WORD_LENGTH 51
-#define WORDS_DICTIONARY 3
 
-static const char dictionary[WORDS_DICTIONARY][WORD_LENGTH] = 
-{
-	{"aaaabaaaa"},
-	{"gidedgide"},
-	{"listen"},
-};
 
-// return string length when meet the first '\0'
+// return string length when meet the first '\0' 
 int get_string_length(char word[])
 {
 	int m;
@@ -47,64 +40,51 @@ int is_palindrome_or_not(char word[], int length)
   return 1;
 }
 
-// anagram analyse
+// an anagram of a palindrome analyse
 // look up the dictionary
-int is_anagram_or_not(char word[], int length)
+int is_anagram_of_palindrome_or_not(char word[], int length)
 {
 	int i,j,k;
 	int len_dic;
 	char temp;
-	int is_find = 0;
 
-	for (i = 0; i < WORDS_DICTIONARY; i ++)
+	int count[26];
+	int oddChar = 0;
+
+	memset(count, 0, sizeof(count));
+
+	for (i = 0; i < length; i ++)
 	{
-		// already find an anagram
-		if (is_find) break;
-
-		len_dic = get_string_length(dictionary[i]);
-		//printf("sizeof dictionary[%d] is %d ***\n", i, len_dic);
-		
-		// not an anagram 
-		if (length != len_dic) continue;
-
-		for (j = 0; j < len_dic; j++)
-		{
-			is_find = 0;
-			for (k = j; k < length; k++)
-			{
-				//swap word[k] and word[j]
-				if (dictionary[i][j] == word[k])
-				{
-					temp = word[k];
-					word[k] = word[j];
-					word[j] = temp;
-					is_find = 1;
-					break;
-				}
-			}
-			if (!is_find)  // did not find the letter
-			{
-				break;
-			}
-		}
+		temp = word[i];
+		count[temp - 'a']++;
 	}
+	
+	// a~z counter
+	for(i = 0; i < 26; i++ )
+    {
+		if( oddChar > 1) // more than 1 char should have odd frequency
+			return 0;
+           
+        if( count[i] % 2 == 1 )
+            oddChar++;
+    }
 
-	return is_find;
+	return 1;
 }
 
 void analyse(char str[], int len)
 {
 	if (is_palindrome_or_not(str, len))
 	{
-		printf("    is true\n");
+		printf("    is a palindrome\n");
 	}
-	else if (is_anagram_or_not(str, len))
+	else if (is_anagram_of_palindrome_or_not(str, len))
 	{
-		printf("    is true\n");
+		printf("    is an anagram of a palindrome \n");
 	}
 	else
 	{
-		printf("    is false\n");
+		printf("    is neither\n");
 	}
 }
 
@@ -140,16 +120,6 @@ void main()
 	int length;
 	int i, j;
 
-	for (i = 0; i < WORDS_DICTIONARY; i++)
-	{
-		for (j = 0; j < sizeof(dictionary[i]); j++)
-		{
-			printf("%c", dictionary[i][j]);
-			if (0 == dictionary[i][j]) break;
-		}
-		printf("\n");
-	}
-	
 	while(1)
 	{
 
@@ -167,7 +137,7 @@ void main()
 		{
 
 			printf("You entered: %s, length is %d", str, length);
-			analyse(str, length);
+			analyse(str, length); 
 		}
 		
 	}	
